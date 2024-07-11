@@ -3,5 +3,5 @@
 
 Currently controlled with arrow keys
 
-https://github.com/Himanshu-N/VR-Driving-Simulator/assets/100259622/50f9ab39-918e-4e5a-838c-6063bbd6b3cf
+https://github.com/Himanshu-N/VR-Driving-Simulator/assets/100259622/a20bc8e8-e867-498e-a16b-73475d69196d
 
