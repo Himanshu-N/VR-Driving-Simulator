@@ -1,0 +1,54 @@
+{
+    "name": "SimulatorInputAction",
+    "maps": [
+        {
+            "name": "Car",
+            "id": "4c02e841-6ee5-4dd6-a0bf-9d01834ce5bd",
+            "actions": [
+                {
+                    "name": "Steering",
+                    "type": "Value",
+                    "id": "f1458dce-d9f4-4444-9ddb-dbdd2b2dfdc5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Acceleration",
+                    "type": "Value",
+                    "id": "9fe0f6ec-6bab-4a26-aa8a-e96ff090afb7",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4aea7168-8b8f-4f39-a8f2-6c6c3568e0a6",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Steering",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "615e697a-33bc-4d0b-93f6-8cb6e333a61e",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Acceleration",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
