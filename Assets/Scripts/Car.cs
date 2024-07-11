@@ -5,14 +5,23 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     [SerializeField] Transform centreOfMass;
-    [SerializeField] GameInput Game_Input;
+    [SerializeField] KeyboardInput Game_Input;
+    [SerializeField] SimulatorInputControl simulatorInputControl;
 
-    public float motorTorque = 1f;
-    public float steerMax = 20f;
-    private float throttleInput ;
+    public float motorTorque;
+    public float steerMax;
+    public float brakeMax;
+    private float throttleInput, brakeInput;
     private float steeringInput;
     private Rigidbody _rigidbody;
     private Wheel[] wheels;
+
+    private enum Mode
+    {
+        Keyboard,
+        Controller,
+    }
+    [SerializeField] private Mode mode;
 
     private void Start()
     {
@@ -24,12 +33,25 @@ public class Car : MonoBehaviour
 
     private void Update()
     {
-        steeringInput = Game_Input.GetInputVectorNormalised().x;
-        throttleInput = Game_Input.GetInputVectorNormalised().y;
+        switch (mode)
+        {
+            case Mode.Keyboard:
+                steeringInput = Game_Input.GetInputVectorNormalised().x;
+                throttleInput = Game_Input.GetInputVectorNormalised().y;
+                break;
+            case Mode.Controller:
+                steeringInput = simulatorInputControl.steerValue;
+                //throttleInput = simulatorInputControl.accelerationValue; // to be used when reverse option is there
+                throttleInput = simulatorInputControl.accelerationValue - simulatorInputControl.clutchValue; // clutch will be used for reverse torque temporarily.
+
+                brakeInput = simulatorInputControl.brakeValue;
+                break;
+        }
 
         foreach (Wheel wheel in wheels)
         {
             wheel.Torque = throttleInput * motorTorque;
+            wheel.GetComponentInParent<WheelCollider>().brakeTorque = brakeInput * brakeMax;
             wheel.SteerAngle = steeringInput * steerMax;
         }
     }

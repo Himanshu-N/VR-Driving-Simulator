@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameInput : MonoBehaviour
+public class KeyboardInput : MonoBehaviour
 {
-    public static GameInput Instance { get; private set;}
     CarInputAction carInputAction;
 
     private void Awake()
     {
-        Instance = this;
         carInputAction = new CarInputAction();
         carInputAction.Car.Enable();
     }

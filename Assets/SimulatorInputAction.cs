@@ -44,6 +44,24 @@ public partial class @SimulatorInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Brake"",
+                    ""type"": ""Value"",
+                    ""id"": ""feeb9097-85c4-4da2-8d3f-d4be046e763a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Clutch"",
+                    ""type"": ""Value"",
+                    ""id"": ""b977e82e-760c-4424-9b3d-07d2057246b0"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -68,6 +86,28 @@ public partial class @SimulatorInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Acceleration"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a939930a-550b-4ce0-8c3d-259d6381766a"",
+                    ""path"": ""<HID::Logitech G29 Driving Force Racing Wheel>/rz"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1795b6a-9a95-44e5-bd7a-ecf94a3cdb5b"",
+                    ""path"": ""<HID::Logitech G29 Driving Force Racing Wheel>/stick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Clutch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +118,8 @@ public partial class @SimulatorInputAction: IInputActionCollection2, IDisposable
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
         m_Car_Steering = m_Car.FindAction("Steering", throwIfNotFound: true);
         m_Car_Acceleration = m_Car.FindAction("Acceleration", throwIfNotFound: true);
+        m_Car_Brake = m_Car.FindAction("Brake", throwIfNotFound: true);
+        m_Car_Clutch = m_Car.FindAction("Clutch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -141,12 +183,16 @@ public partial class @SimulatorInputAction: IInputActionCollection2, IDisposable
     private List<ICarActions> m_CarActionsCallbackInterfaces = new List<ICarActions>();
     private readonly InputAction m_Car_Steering;
     private readonly InputAction m_Car_Acceleration;
+    private readonly InputAction m_Car_Brake;
+    private readonly InputAction m_Car_Clutch;
     public struct CarActions
     {
         private @SimulatorInputAction m_Wrapper;
         public CarActions(@SimulatorInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @Steering => m_Wrapper.m_Car_Steering;
         public InputAction @Acceleration => m_Wrapper.m_Car_Acceleration;
+        public InputAction @Brake => m_Wrapper.m_Car_Brake;
+        public InputAction @Clutch => m_Wrapper.m_Car_Clutch;
         public InputActionMap Get() { return m_Wrapper.m_Car; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -162,6 +208,12 @@ public partial class @SimulatorInputAction: IInputActionCollection2, IDisposable
             @Acceleration.started += instance.OnAcceleration;
             @Acceleration.performed += instance.OnAcceleration;
             @Acceleration.canceled += instance.OnAcceleration;
+            @Brake.started += instance.OnBrake;
+            @Brake.performed += instance.OnBrake;
+            @Brake.canceled += instance.OnBrake;
+            @Clutch.started += instance.OnClutch;
+            @Clutch.performed += instance.OnClutch;
+            @Clutch.canceled += instance.OnClutch;
         }
 
         private void UnregisterCallbacks(ICarActions instance)
@@ -172,6 +224,12 @@ public partial class @SimulatorInputAction: IInputActionCollection2, IDisposable
             @Acceleration.started -= instance.OnAcceleration;
             @Acceleration.performed -= instance.OnAcceleration;
             @Acceleration.canceled -= instance.OnAcceleration;
+            @Brake.started -= instance.OnBrake;
+            @Brake.performed -= instance.OnBrake;
+            @Brake.canceled -= instance.OnBrake;
+            @Clutch.started -= instance.OnClutch;
+            @Clutch.performed -= instance.OnClutch;
+            @Clutch.canceled -= instance.OnClutch;
         }
 
         public void RemoveCallbacks(ICarActions instance)
@@ -193,5 +251,7 @@ public partial class @SimulatorInputAction: IInputActionCollection2, IDisposable
     {
         void OnSteering(InputAction.CallbackContext context);
         void OnAcceleration(InputAction.CallbackContext context);
+        void OnBrake(InputAction.CallbackContext context);
+        void OnClutch(InputAction.CallbackContext context);
     }
 }
