@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeyboardInput : MonoBehaviour
 {
     CarInputAction carInputAction;
+    private float brakeValue;
 
     private void Awake()
     {
@@ -15,7 +16,13 @@ public class KeyboardInput : MonoBehaviour
     public Vector2 GetInputVectorNormalised()
     {
         Vector2 inputVector = carInputAction.Car.Move.ReadValue<Vector2>();
+
         inputVector = inputVector.normalized;
         return inputVector;
+    }
+    public float GetBrakeValue()
+    {
+        brakeValue = carInputAction.Car.Brake.ReadValue<float>();
+        return brakeValue;
     }
 }

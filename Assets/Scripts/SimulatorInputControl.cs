@@ -33,7 +33,7 @@ public class SimulatorInputControl : MonoBehaviour
         float clutchFloat = simulatorInputAction.Car.Clutch.ReadValue<float>(); //Gives values from -1 to 1 for full range of motion
         clutchValue = (clutchFloat + 1) * oneFactor2;//scaling it to 0-1
 
-        Debug.Log("Acc: "+accelerationValue + ", Brake:"+ brakeValue + ", Clutch:" + clutchValue);
-        Debug.Log("Steering: " + steerValue);
+        //Debug.Log("Acc: "+accelerationValue + ", Brake:"+ brakeValue + ", Clutch:" + clutchValue);
+        //Debug.Log("Steering: " + steerValue);
     }
 }

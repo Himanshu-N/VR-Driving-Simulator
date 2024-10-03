@@ -38,6 +38,8 @@ public class Car : MonoBehaviour
             case Mode.Keyboard:
                 steeringInput = Game_Input.GetInputVectorNormalised().x;
                 throttleInput = Game_Input.GetInputVectorNormalised().y;
+                brakeInput = Game_Input.GetBrakeValue();
+
                 break;
             case Mode.Controller:
                 steeringInput = simulatorInputControl.steerValue;
